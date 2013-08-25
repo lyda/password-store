@@ -123,6 +123,7 @@ tmpdir() {
 }
 GETOPT="getopt"
 
+source /usr/local/Cellar/pass/1.4.2/lib/password-store.platform.sh
 # source /path/to/platform-defined-functions
 #
 # END Platform definable
