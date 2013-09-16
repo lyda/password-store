@@ -322,7 +322,6 @@ case "$command" in
 		path="$2"
 		mkdir -p -v "$PREFIX/$(dirname "$path")"
 		passfile="$PREFIX/$path.gpg"
-		template="$program.XXXXXXXXXXXXX"
 
 		while ! gpg2 -e -r "$ID" -o "$passfile" $GPG_OPTS "$file"; do
 			echo "GPG encryption failed. Retrying."
