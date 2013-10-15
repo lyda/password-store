@@ -44,6 +44,8 @@ Usage:
         overwriting existing password unless forced.
     $program edit pass-name
         Insert a new password or edit an existing password using ${EDITOR:-vi}.
+    $program cp file pass-name
+        Copy file into pass-name.
     $program generate [--no-symbols,-n] [--clip,-c] [--force,-f] pass-name pass-length
         Generate a new password of pass-length with optionally no symbols.
         Optionally put it on the clipboard and clear board after 45 seconds.
@@ -63,7 +65,7 @@ _EOF
 }
 is_command() {
 	case "$1" in
-		init|ls|list|show|insert|edit|generate|remove|rm|delete|git|help|--help|version|--version) return 0 ;;
+		init|ls|list|show|insert|edit|cp|generate|remove|rm|delete|git|help|--help|version|--version) return 0 ;;
 		*) return 1 ;;
 	esac
 }
@@ -304,6 +306,28 @@ case "$command" in
 			sleep 1
 		done
 		git_add_file "$passfile" "$action password for $path using ${EDITOR:-vi}."
+		;;
+	cp)
+		if [[ $# -ne 2 ]]; then
+			echo "Usage: $program $command file pass-name"
+			exit 1
+		fi
+
+                file="$1"
+                if [[ ! -f "$file" ]]; then
+                  echo "File '$file' not found."
+                  exit 1
+                fi
+
+		path="$2"
+		mkdir -p -v "$PREFIX/$(dirname "$path")"
+		passfile="$PREFIX/$path.gpg"
+
+		while ! gpg2 -e -r "$ID" -o "$passfile" $GPG_OPTS "$file"; do
+			echo "GPG encryption failed. Retrying."
+			sleep 1
+		done
+		git_add_file "$passfile" "Copied $file to $path."
 		;;
 	generate)
 		clip=0
