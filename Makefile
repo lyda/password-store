@@ -12,13 +12,12 @@ all:
 	@echo "Password store is a shell script, so there is nothing to do. Try \"make install\" instead."
 
 install:
-	@mkdir -p "$(DESTDIR)$(BINDIR)" "$(DESTDIR)$(LIBDIR)" "$(DESTDIR)$(MANDIR)/man1" "$(DESTDIR)$(SYSCONFDIR)/bash_completion.d"
-	@install -m 0755 -v src/password-store.sh "$(DESTDIR)$(BINDIR)/pass"
-	@install -m 0644 -v man/pass.1 "$(DESTDIR)$(MANDIR)/man1/pass.1"
-	@install -m 0644 -v contrib/pass.bash-completion "$(DESTDIR)$(PREFIX)/share/bash-completion/completions/password-store"
+	@install -D -m 0755 -v src/password-store.sh "$(DESTDIR)$(BINDIR)/pass"
+	@install -D -m 0644 -v man/pass.1 "$(DESTDIR)$(MANDIR)/man1/pass.1"
+	@install -D -m 0644 -v contrib/pass.bash-completion "$(DESTDIR)$(PREFIX)/share/bash-completion/completions/password-store"
 
 #	Uncomment to install the zsh completion file.
-#	@install -m 0644 -v contrib/pass.zsh-completion "$(DESTDIR)$(PREFIX)/share/zsh/site-functions/_pass"
+	@install -D -m 0644 -v contrib/pass.zsh-completion "$(DESTDIR)$(PREFIX)/share/zsh/site-functions/_pass"
 #
 #	Uncomment to install the fish completion file.
 #	@install -m 0644 -v contrib/pass.fish-completion "$(DESTDIR)$(PREFIX)/share/fish/completions/pass.fish"
