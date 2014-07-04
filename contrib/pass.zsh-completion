@@ -43,6 +43,11 @@ _pass () {
 					"--clip[copy password to the clipboard]"
 				_pass_complete_entries_with_subdirs
 				;;
+                        cp)
+				_arguments : \
+                                        '*:file or directory:_files'
+                                        _pass_complete_entries_with_subdirs
+                                ;;
 			rm)
 				_arguments : \
 					"-f[force deletion]" \
@@ -76,6 +81,7 @@ _pass () {
 			"insert:Insert a new password"
 			"generate:Generate a new password using pwgen"
 			"edit:Edit a password with \$EDITOR"
+			"cp:Copy file to password"
 			"rm:Remove the password"
 			"git:Call git on the password store"
 			"version:Output version information"
